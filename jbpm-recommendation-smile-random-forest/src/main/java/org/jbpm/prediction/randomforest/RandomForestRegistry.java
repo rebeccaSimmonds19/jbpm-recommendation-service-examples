@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.jbpm.prediction.randomforest.services;
+package org.jbpm.prediction.randomforest;
+//import org.kie.internal.task.api.prediction.PredictionService;
 
-import org.jbpm.prediction.randomforest.SmileRandomForest;
 import org.kie.internal.task.api.prediction.PredictionService;
 
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import java.util.ServiceLoader;
 
 public class RandomForestRegistry {
     private static final ServiceLoader<PredictionService> foundServices = ServiceLoader.load(PredictionService.class, RandomForestRegistry.class.getClassLoader());
-    private String selectedService = System.getProperty("org.jbpm.prediction.randomforest.services", SmileRandomForest.IDENTIFIER);
+    private String selectedService = System.getProperty("org.jbpm.prediction.randomforest", SmileRandomForest.IDENTIFIER);
     private Map<String, PredictionService> predictionServices = new HashMap<>();
 
     private RandomForestRegistry() {
@@ -51,7 +51,7 @@ public class RandomForestRegistry {
         static final RandomForestRegistry INSTANCE = new RandomForestRegistry();
     }
 
-    public synchronized void addStrategy(PredictionService predictionService) {
+    public synchronized void addStrategy(SmileRandomForest predictionService) {
         this.predictionServices.put(predictionService.getIdentifier(), predictionService);
 
     }
